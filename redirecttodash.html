@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect to Webpage from JSON</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00; /* Green text */
+            font-family: sans-serif; /* Modern font */
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="number"] {
+            background-color: #333; /* Darker input background */
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #00ff00; /* Green button background */
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00cc00; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Redirect to Webpage from JSON</h1>
+    <input type="number" id="fileNumber" placeholder="Enter a number" />
+    <button onclick="redirectToPage()">Go to Page</button>
+
+    <script>
+        let jsonData = {};
+
+        // Fetch the external JSON file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                jsonData = data; // Store the JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching the JSON file:', error);
+            });
+
+        function redirectToPage() {
+            const number = document.getElementById('fileNumber').value;
+            const filePath = jsonData[number];
+
+            if (filePath) {
+                window.location.href = filePath; // Redirect to the file path
+            } else {
+                alert('File not found for the entered number.');
+            }
+        }
+    </script>
+</body>
+</html>
