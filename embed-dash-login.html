@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed HTML from External JSON</title>
+    <style>
+        #output {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard Login</h1>
+  <p>To login to your dashboard, please enter your ADN (account document number)</p>
+    <input type="number" id="fileNumber" placeholder="Enter a number" />
+    <button onclick="embedHTML()">Sign In</button>
+    
+    <iframe id="output" src="" frameborder="0"></iframe>
+
+    <script>
+        let jsonData = {};
+
+        // Fetch the external JSON file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                jsonData = data; // Store the JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching the JSON file:', error);
+            });
+
+        function embedHTML() {
+            const number = document.getElementById('fileNumber').value;
+            const filePath = jsonData[number];
+
+            if (filePath) {
+                document.getElementById('output').src = filePath;
+            } else {
+                alert('File not found for the entered number.');
+            }
+        }
+    </script>
+</body>
+</html>
